@@ -455,18 +455,18 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 523636205}
-  m_LocalRotation: {x: 0.26723832, y: 0, z: 0, w: 0.9636305}
+  m_LocalRotation: {x: 0.2588191, y: 0, z: 0, w: 0.9659258}
   m_LocalPosition: {x: 0, y: 1.2154665, z: -0.21815747}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 2064262835}
   - {fileID: 1108365571}
+  - {fileID: 2064262835}
   - {fileID: 594565967}
   - {fileID: 416154473}
   - {fileID: 665088294}
   m_Father: {fileID: 0}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 31, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 30, y: 0, z: 0}
 --- !u!114 &523636207
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -483,20 +483,22 @@ MonoBehaviour:
     i: 0
     d: 0.02
   yawPID:
-    p: 0
+    p: 0.05
     i: 0
-    d: 0
+    d: 0.01
   velPID:
-    p: 0
-    i: 0
-    d: 0
+    p: 0.07
+    i: 0.005
+    d: 0.002
   leftMotor: {fileID: 28730631}
   rightMotor: {fileID: 1920460293}
   accel: {fileID: 2064262839}
   pitch: {fileID: 1486412577}
   yaw: {fileID: 2028605909}
+  trackVelocity: {fileID: 2064262837}
   maLength: 3
   beta: 1
+  maxAngleSetpoint: 0.3
 --- !u!1 &527367289
 GameObject:
   m_ObjectHideFlags: 0
@@ -659,7 +661,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 665088293}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 5.99, z: 0.000000044703}
+  m_LocalPosition: {x: 0, y: 5.49, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 3.8178294}
   m_Children: []
   m_Father: {fileID: 523636206}
@@ -903,7 +905,7 @@ Transform:
   m_LocalScale: {x: 2, y: 4.740066, z: 0.72376645}
   m_Children: []
   m_Father: {fileID: 523636206}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &1108365572
 Rigidbody:
@@ -1319,13 +1321,13 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2064262834}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 4.18, z: 0}
+  m_LocalPosition: {x: 0, y: 4.65, z: 0}
   m_LocalScale: {x: 2, y: 3, z: 0.72376645}
   m_Children:
   - {fileID: 2028605910}
   - {fileID: 1486412576}
   m_Father: {fileID: 523636206}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &2064262837
 Rigidbody:

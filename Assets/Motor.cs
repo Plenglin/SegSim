@@ -19,7 +19,6 @@ public class Motor : MonoBehaviour {
 		float absTorque = (realPower * maxTorque * (maxAngularVelocity - rb.angularVelocity.magnitude)) / maxAngularVelocity;
 		float realTorque = Mathf.Sign(power) * absTorque;
 		Vector3 outTorque = axis * realTorque;
-		Debug.Log(absTorque);
 		Debug.DrawLine(transform.position, transform.position + transform.rotation * outTorque);
 		rb.AddRelativeTorque(outTorque);
 	}
