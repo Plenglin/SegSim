@@ -6,7 +6,7 @@ using UnityEngine.UI;
 [System.Serializable]
 public class PID {
 
-    public float p, i, d;
+    public float p, i, d, f;
 
     [System.NonSerialized]
     private float sum = 0f, lastError = 0f;
@@ -17,5 +17,9 @@ public class PID {
         float ret = p * e + i * sum + d * delta;
         lastError = e;
         return ret;
+    }
+
+    public float PushError(float dt, float e, float ff) {
+        return PushError(dt, e) + f * ff;
     }
 }

@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Motor : MonoBehaviour {
 
 	public float power;
 	public float maxTorque, maxAngularVelocity;
 	public Vector3 axis;
+	public Text logTo;
 
 	private Rigidbody rb;
 
@@ -21,5 +23,8 @@ public class Motor : MonoBehaviour {
 		Vector3 outTorque = axis * realTorque;
 		Debug.DrawLine(transform.position, transform.position + transform.rotation * outTorque);
 		rb.AddRelativeTorque(outTorque);
+		if (logTo != null) {
+			logTo.text = rb.angularVelocity.magnitude.ToString();
+		}
 	}
 }

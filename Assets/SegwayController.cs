@@ -35,11 +35,15 @@ public class SegwayController : MonoBehaviour {
 
         float errorVel = (trackVelocity.position.z - lastZ) / Time.fixedDeltaTime;
         lastZ = trackVelocity.position.z;
-        Debug.Log(errorVel);
         
         float setpointPitch = velPID.PushError(Time.fixedDeltaTime, -errorVel);
+        //float setpointPitch = Mathf.PI / 32;
+        //float setpointPitch = 0;
         
         float errorPitch = pitchAngle - Mathf.Clamp(setpointPitch, -maxAngleSetpoint, maxAngleSetpoint);
+
+        //float pitchFeedForward = -Physics.gravity.y * Mathf.Tan(pitchAngle);
+        //Debug.Log(pitchFeedForward);
         
         float powerYaw = yawPID.PushError(Time.fixedDeltaTime, yaw.Angle);
         float powerPitch = tiltPID.PushError(Time.fixedDeltaTime, errorPitch);
