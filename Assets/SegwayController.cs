@@ -15,12 +15,14 @@ public class SegwayController : MonoBehaviour {
     public Gyroscope pitch, yaw;
 
     public Rigidbody trackVelocity;
+    public float targetVelocity;
 
     public int maLength;
     public float beta;
     public float maxAngleSetpoint;
+    public float maxVelocitySetpoint;
     private MovingAverage ma;
-
+    private float angVelFeed;
     private float lastZ;
 
     void Start() {
@@ -29,24 +31,26 @@ public class SegwayController : MonoBehaviour {
     }
 	
 	void FixedUpdate () {
+        float dt = Time.fixedDeltaTime;
+
         float pitchAccel = Mathf.Atan2(accel.Accel.y, accel.Accel.z);
         float pitchGyro = pitch.Angle;
         float pitchAngle = beta * pitchGyro + (1 - beta) * pitchAccel;
 
-        float errorVel = (trackVelocity.position.z - lastZ) / Time.fixedDeltaTime;
+        float errorVel = (trackVelocity.position.z - lastZ) / dt;
         lastZ = trackVelocity.position.z;
         
-        float setpointPitch = velPID.PushError(Time.fixedDeltaTime, -errorVel);
+        float setpointPitch = velPID.PushError(dt, -errorVel - Mathf.Clamp(targetVelocity, -maxVelocitySetpoint, maxVelocitySetpoint));
         //float setpointPitch = Mathf.PI / 32;
         //float setpointPitch = 0;
         
         float errorPitch = pitchAngle - Mathf.Clamp(setpointPitch, -maxAngleSetpoint, maxAngleSetpoint);
 
-        //float pitchFeedForward = -Physics.gravity.y * Mathf.Tan(pitchAngle);
+        angVelFeed += -Physics.gravity.y * Mathf.Tan(pitchAngle) * dt;
         //Debug.Log(pitchFeedForward);
         
-        float powerYaw = yawPID.PushError(Time.fixedDeltaTime, yaw.Angle);
-        float powerPitch = tiltPID.PushError(Time.fixedDeltaTime, errorPitch);
+        float powerYaw = yawPID.PushError(dt, yaw.Angle);
+        float powerPitch = tiltPID.PushError(dt, errorPitch, angVelFeed);
 
         leftMotor.power = powerPitch - powerYaw;
         rightMotor.power = powerPitch + powerYaw;
